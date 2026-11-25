@@ -1,5 +1,6 @@
 <?php
-class TvtcApiRunner {
+class BisatApiRunner
+{
 
     public static function register_apis()
     {
@@ -13,18 +14,14 @@ class TvtcApiRunner {
     }
 
 
-    public static function randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes=50)
+    public static function randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes = 50)
     {
         $old = $applicantObject->getVal($attribute);
-        if($old==0)
-        {
-            $new ="N";
-        }
-        else 
-        {
-            $r = random_int(0,100);
+        if ($old == 0) {
+            $new = "N";
+        } else {
+            $r = random_int(0, 100);
             $new = ($r <= $maxProbabilityForYes) ? "Y" : "N";
-            
         }
         $applicantObject->set($attribute, $new);
 
@@ -34,17 +31,16 @@ class TvtcApiRunner {
     public static function run_api_mohe_graduate_record($applicantObject)
     {
         $rand_YN_attributes = [
-                "attribute_1" => ['maxProb'=>20],
+            "attribute_1" => ['maxProb' => 20],
         ];
         $info_arr = [];
-        foreach($rand_YN_attributes as $attribute => $attributeConfig)
-        {
+        foreach ($rand_YN_attributes as $attribute => $attributeConfig) {
             $maxProbabilityForYes = $attributeConfig['maxProb'];
-            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);        
+            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);
             $info_arr[] = "$attribute done : value (with probability for Yes = $maxProbabilityForYes), old value was $old and now become $new";
         }
 
-        $info = implode("<br>\n",$info_arr);
+        $info = implode("<br>\n", $info_arr);
 
         $applicantObject->commit();
         return ["", $info, "", ""];
@@ -93,40 +89,37 @@ class TvtcApiRunner {
     public static function run_api_qiyas_exam_result($applicantObject)
     {
         $rand_YN_attributes = [
-            "attribute_27" => ['maxProb'=>93],
-            "attribute_11" => ['maxProb'=>93],
+            "attribute_27" => ['maxProb' => 93],
+            "attribute_11" => ['maxProb' => 93],
         ];
         $info_arr = [];
-        foreach($rand_YN_attributes as $attribute => $attributeConfig)
-        {
+        foreach ($rand_YN_attributes as $attribute => $attributeConfig) {
             $maxProbabilityForYes = $attributeConfig['maxProb'];
-            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);        
+            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);
             $info_arr[] = "$attribute done : value (with probability for Yes = $maxProbabilityForYes), old value was $old and now become $new";
         }
 
-        $info = implode("<br>\n",$info_arr);
+        $info = implode("<br>\n", $info_arr);
 
         $applicantObject->commit();
         return ["", $info, "", ""];
-        
     }
 
     public static function run_api_rayat_api($applicantObject)
     {
 
         $rand_YN_attributes = [
-            "attribute_5" => ['maxProb'=>20],
-            "attribute_8" => ['maxProb'=>10],
+            "attribute_5" => ['maxProb' => 20],
+            "attribute_8" => ['maxProb' => 10],
         ];
         $info_arr = [];
-        foreach($rand_YN_attributes as $attribute => $attributeConfig)
-        {
+        foreach ($rand_YN_attributes as $attribute => $attributeConfig) {
             $maxProbabilityForYes = $attributeConfig['maxProb'];
-            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);        
+            list($old, $new) = self::randomizeYNAttribute($attribute, $applicantObject, $maxProbabilityForYes);
             $info_arr[] = "$attribute done : value (with probability for Yes = $maxProbabilityForYes), old value was $old and now become $new";
         }
 
-        $info = implode("<br>\n",$info_arr);
+        $info = implode("<br>\n", $info_arr);
 
         $applicantObject->commit();
         return ["", $info, "", ""];
@@ -139,13 +132,4 @@ class TvtcApiRunner {
         // return ["not implemented", "", "", ""];
         return ["", "done", "", ""];
     }
-
-    
-
-    
-
-    
-
-
-
 }
